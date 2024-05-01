@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://doap3bnd2qgtk"]
+[gd_scene load_steps=5 format=3 uid="uid://doap3bnd2qgtk"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_3t2yw"]
 [ext_resource type="Texture2D" uid="uid://58825vrsur3v" path="res://icon.svg" id="2_0mm4e"]
+[ext_resource type="Script" path="res://scenes/PlayerBattleScene.gd" id="2_f4lnw"]
 [ext_resource type="Script" path="res://scenes/EnemyBattleScene.gd" id="3_jmw3i"]
 
 [node name="BattleScene" type="Node2D"]
@@ -37,6 +38,20 @@ offset_bottom = 81.0
 text = "Item"
 
 [node name="PlayerBattleScene" type="Node" parent="."]
+script = ExtResource("2_f4lnw")
+
+[node name="HealthComponent" type="Node" parent="PlayerBattleScene"]
+
+[node name="BoxContainer" type="BoxContainer" parent="PlayerBattleScene/HealthComponent"]
+offset_left = 610.0
+offset_top = 461.0
+offset_right = 711.0
+offset_bottom = 490.0
+
+[node name="healthBar" type="ProgressBar" parent="PlayerBattleScene/HealthComponent/BoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+value = 100.0
 
 [node name="Icon" type="Sprite2D" parent="PlayerBattleScene"]
 position = Vector2(662, 570)
@@ -44,6 +59,8 @@ texture = ExtResource("2_0mm4e")
 
 [node name="EnemyBattleScene" type="Node" parent="."]
 script = ExtResource("3_jmw3i")
+
+[node name="ActionComponent" type="Node" parent="EnemyBattleScene"]
 
 [node name="HealthComponent" type="Node" parent="EnemyBattleScene"]
 
