@@ -1,20 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://doap3bnd2qgtk"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_3t2yw"]
-[ext_resource type="Texture2D" uid="uid://58825vrsur3v" path="res://icon.svg" id="2_0mm4e"]
-[ext_resource type="Script" path="res://scenes/PlayerBattleScene.gd" id="2_f4lnw"]
-[ext_resource type="Script" path="res://scenes/EnemyBattleScene.gd" id="3_jmw3i"]
+[ext_resource type="PackedScene" uid="uid://g1hmpj4ghbke" path="res://scenes/player_battle_scene.tscn" id="2_ipmek"]
+[ext_resource type="PackedScene" uid="uid://30hee5p247n3" path="res://scenes/enemy_battle_scene.tscn" id="3_2bkef"]
+[ext_resource type="Script" path="res://scripts/debug/battle_debug_menu.gd" id="4_vrb7h"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_3t2yw")
 
-[node name="PlaceholderBackground" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(1920, 1080)
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.435192, 0.435192, 0.435192, 1)
-
-[node name="BattleMenu" type="Control" parent="."]
+[node name="MainBattleMenu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 1.0
@@ -22,62 +16,38 @@ offset_top = 911.0
 offset_right = 337.0
 offset_bottom = 1078.0
 
-[node name="AttackButton" type="Button" parent="BattleMenu"]
+[node name="StartButton" type="Button" parent="MainBattleMenu"]
 layout_mode = 0
-offset_left = 13.0
-offset_right = 152.0
-offset_bottom = 33.0
-text = "Attack"
+offset_left = 673.0
+offset_top = -50.0
+offset_right = 1119.0
+offset_bottom = 123.0
+text = "Start Battle"
 
-[node name="ItemButton" type="Button" parent="BattleMenu"]
-layout_mode = 0
-offset_left = 13.0
-offset_top = 48.0
-offset_right = 152.0
-offset_bottom = 81.0
-text = "Item"
+[node name="PlayerBattleScene" parent="." instance=ExtResource("2_ipmek")]
+position = Vector2(506, 455)
+speed = 30
 
-[node name="PlayerBattleScene" type="Node" parent="."]
-script = ExtResource("2_f4lnw")
+[node name="EnemyBattleScene" parent="." instance=ExtResource("3_2bkef")]
+position = Vector2(1419, 452)
+speed = 50
 
-[node name="HealthComponent" type="Node" parent="PlayerBattleScene"]
+[node name="BattleDebugMenu" type="BoxContainer" parent="."]
+offset_left = 1648.0
+offset_top = 1.0
+offset_right = 1918.0
+offset_bottom = 1075.0
+script = ExtResource("4_vrb7h")
 
-[node name="BoxContainer" type="BoxContainer" parent="PlayerBattleScene/HealthComponent"]
-offset_left = 610.0
-offset_top = 461.0
-offset_right = 711.0
-offset_bottom = 490.0
-
-[node name="healthBar" type="ProgressBar" parent="PlayerBattleScene/HealthComponent/BoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="BattleDebugMenu"]
+custom_minimum_size = Vector2(270, 0)
 layout_mode = 2
-value = 100.0
 
-[node name="Icon" type="Sprite2D" parent="PlayerBattleScene"]
-position = Vector2(662, 570)
-texture = ExtResource("2_0mm4e")
-
-[node name="EnemyBattleScene" type="Node" parent="."]
-script = ExtResource("3_jmw3i")
-
-[node name="ActionComponent" type="Node" parent="EnemyBattleScene"]
-
-[node name="HealthComponent" type="Node" parent="EnemyBattleScene"]
-
-[node name="BoxContainer" type="BoxContainer" parent="EnemyBattleScene/HealthComponent"]
-offset_left = 1161.0
-offset_top = 463.0
-offset_right = 1262.0
-offset_bottom = 492.0
-
-[node name="healthBar" type="ProgressBar" parent="EnemyBattleScene/HealthComponent/BoxContainer"]
-custom_minimum_size = Vector2(100, 0)
+[node name="TurnDebug" type="Label" parent="BattleDebugMenu/VBoxContainer"]
 layout_mode = 2
-value = 100.0
+text = "Turn: <TURN>"
+horizontal_alignment = 2
 
-[node name="Icon" type="Sprite2D" parent="EnemyBattleScene"]
-modulate = Color(0.998277, 0.623596, 0.666819, 1)
-position = Vector2(1213, 575)
-texture = ExtResource("2_0mm4e")
-
-[connection signal="pressed" from="BattleMenu/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="MainBattleMenu/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="deal_total_damage" from="PlayerBattleScene" to="." method="_on_player_battle_scene_deal_total_damage"]
+[connection signal="attack_player" from="EnemyBattleScene" to="." method="_on_enemy_battle_scene_attack_player"]

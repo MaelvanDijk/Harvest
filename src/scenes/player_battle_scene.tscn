@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://g1hmpj4ghbke"]
+
+[ext_resource type="Script" path="res://scripts/player_battle_scene.gd" id="1_j06i3"]
+[ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
+[ext_resource type="Texture2D" uid="uid://by50o11reaub1" path="res://Sprites/TEMP/SSC MONARCH.png" id="3_smeih"]
+[ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/right_arm_component.tscn" id="4_sfbtf"]
+
+[node name="PlayerBattleScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
+script = ExtResource("1_j06i3")
+health_component = NodePath("HealthComponent")
+righ_arm_component = NodePath("RightArmComponent")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_7xxjy")]
+position = Vector2(-50, -400)
+
+[node name="SscMonarch" type="Sprite2D" parent="."]
+texture = ExtResource("3_smeih")
+
+[node name="RightArmComponent" parent="." instance=ExtResource("4_sfbtf")]
+position = Vector2(-207, -41)
+attack = 20
+
+[node name="LeftArmPart" type="Node2D" parent="."]
+
+[node name="HeadPart" type="Node2D" parent="."]
+
+[node name="MainBodyPart" type="Node2D" parent="."]
+
+[node name="LowerBodyPart" type="Node2D" parent="."]
+
+[connection signal="deal_damage" from="RightArmComponent" to="." method="_on_right_arm_component_deal_damage"]
