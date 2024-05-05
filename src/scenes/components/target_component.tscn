@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="2_cxr6j"]
 
 [node name="TargetComponent" type="Node2D"]
+process_mode = 4
+visible = false
 script = ExtResource("1_p5jo7")
 
 [node name="TargetSprite" type="Sprite2D" parent="."]

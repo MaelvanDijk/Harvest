@@ -6,15 +6,3 @@ class_name RightArmComponent
 
 @export var attack:int
 
-signal deal_damage(amount:int)
-
-func _on_texture_button_pressed():
-	if container_control.visible:
-		container_control.visible = false 
-	else:
-		container_control.visible = true
-
-
-func _on_attack_button_pressed():
-	print("Right arm attack!")
-	deal_damage.emit(attack)

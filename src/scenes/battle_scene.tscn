@@ -52,40 +52,8 @@ speed = 10
 [node name="PlayerGroup" type="Node" parent="."]
 
 [node name="PlayerBattleScene" parent="PlayerGroup" instance=ExtResource("2_ipmek")]
-position = Vector2(569, 698)
+position = Vector2(323, 595)
 speed = 30
-
-[node name="MenuControler" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1169.0
-offset_top = 780.0
-offset_right = 1209.0
-offset_bottom = 820.0
-
-[node name="ActionContainer" type="VBoxContainer" parent="MenuControler"]
-layout_mode = 0
-offset_left = -137.0
-offset_top = 78.0
-offset_right = -52.0
-offset_bottom = 198.0
-
-[node name="AttackButton" type="Button" parent="MenuControler/ActionContainer"]
-layout_mode = 2
-text = "Attack"
-
-[node name="OverdriveButton" type="Button" parent="MenuControler/ActionContainer"]
-layout_mode = 2
-text = "Overdrive"
-
-[node name="RepairButton" type="Button" parent="MenuControler/ActionContainer"]
-layout_mode = 2
-text = "Repair
-"
-
-[node name="EndTurnButton" type="Button" parent="MenuControler/ActionContainer"]
-layout_mode = 2
-text = "End Turn"
 
 [connection signal="round_ended" from="TurnManager" to="." method="_on_turn_manager_round_ended"]
 [connection signal="attack_player" from="EnemyGroup/EnemyBattleScene" to="." method="_on_enemy_battle_scene_attack_player"]
@@ -98,5 +66,3 @@ text = "End Turn"
 [connection signal="combatant_destroyed" from="EnemyGroup/EnemyBattleScene3" to="." method="_on_enemy_battle_scene_combatant_destroyed"]
 [connection signal="turn_ended" from="EnemyGroup/EnemyBattleScene3" to="." method="_on_enemy_battle_scene_turn_ended"]
 [connection signal="deal_total_damage" from="PlayerGroup/PlayerBattleScene" to="." method="_on_player_battle_scene_deal_total_damage"]
-[connection signal="player_activated" from="PlayerGroup/PlayerBattleScene" to="." method="_on_player_battle_scene_player_activated"]
-[connection signal="pressed" from="MenuControler/ActionContainer/EndTurnButton" to="." method="_on_end_turn_button_pressed"]

@@ -13,9 +13,11 @@ health_component = NodePath("HealthComponent")
 righ_arm_component = NodePath("RightArmComponent")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_7xxjy")]
-position = Vector2(-50, -400)
+position = Vector2(-56, -203)
 
 [node name="SscMonarch" type="Sprite2D" parent="."]
+position = Vector2(1, 18)
+scale = Vector2(0.496591, 0.496591)
 texture = ExtResource("3_smeih")
 
 [node name="RightArmComponent" parent="." instance=ExtResource("4_sfbtf")]
@@ -24,7 +26,7 @@ attack = 20
 
 [node name="TurnSprite" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(3.99994, -527)
+position = Vector2(0, -288)
 rotation = 3.14048
 scale = Vector2(1.85593, 1.85593)
 texture = ExtResource("5_1313j")
@@ -32,5 +34,34 @@ hframes = 14
 
 [node name="TargetComponent" parent="." instance=ExtResource("6_vmjol")]
 
+[node name="BattleMenuControler" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 372.0
+offset_top = -88.0
+offset_right = 412.0
+offset_bottom = -48.0
+
+[node name="ActionContainer" type="VBoxContainer" parent="BattleMenuControler"]
+layout_mode = 2
+offset_right = 85.0
+offset_bottom = 136.0
+
+[node name="AttackButton" type="Button" parent="BattleMenuControler/ActionContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="OverdriveButton" type="Button" parent="BattleMenuControler/ActionContainer"]
+layout_mode = 2
+text = "Overdrive"
+
+[node name="RepairButton" type="Button" parent="BattleMenuControler/ActionContainer"]
+layout_mode = 2
+text = "Repair
+"
+
+[node name="EndTurnButton" type="Button" parent="BattleMenuControler/ActionContainer"]
+layout_mode = 2
+text = "End Turn"
+
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
-[connection signal="deal_damage" from="RightArmComponent" to="." method="_on_right_arm_component_deal_damage"]

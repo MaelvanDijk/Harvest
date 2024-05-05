@@ -12,6 +12,8 @@ var round := 0
 var combat_active := false
 
 func _ready():
+	for player in player_group.get_children():
+		player.player_turn_ended.connect(_on_player_turn_ended)
 	_play_combat_round()
 
 func _play_combat_round():
@@ -53,9 +55,5 @@ func _on_enemy_battle_scene_combatant_destroyed():
 	if len(combatants) <= 1:
 		print("You win")
 
-func _on_end_turn_button_pressed():
-	menu_controler.visible = false
+func _on_player_turn_ended():
 	turn_manager.end_turn()
-
-func _on_player_battle_scene_player_activated():
-	menu_controler.visible = true
