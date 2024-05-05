@@ -1,80 +1,67 @@
 extends Node2D
 
-@onready var player := $PlayerBattleScene
-@onready var enemy := $EnemyBattleScene
+@onready var player_group := $PlayerGroup
+@onready var enemy_group := $EnemyGroup
+@onready var turn_manager := $TurnManager
 
-@onready var combatants := [player, enemy]
+@onready var combatants := player_group.get_children() + enemy_group.get_children()
 @onready var start_button = $MainBattleMenu/StartButton
 
-var sorted_turn_order := Array()
 var turn = "none"
 var round := 0
+var combat_active := false
 
 
-func _combat_loop():
-	print("Starting combat")
-	_decide_turn_order()
-	_apply_round_start_effects()
-	
-	#for combatant in sorted_turn_order:
-		#turn = combatant
-		#combatant.play_turn()
-		
-func _decide_turn_order():
-	print("deciding turn order")
-	var unsorted_turn_order := combatants
-	
-	unsorted_turn_order.sort_custom(sort_descending)
-	sorted_turn_order = unsorted_turn_order
+func _play_combat_round():
+	print("Starting combat round")
+	round += 1
+	print(combatants)
 
-func sort_descending(a, b):
-	"""Sorts custom sort array in descending order"""
-	if a.speed > b.speed:
-		return true
-	return false
-	
+	if round > 10:
+		_end_combat()
+	else:
+		_apply_round_start_effects()
+		turn_manager.play(combatants.duplicate())
+
+
+func _start_next_round():
+	print("Starting next round.")
+	_play_combat_round()
+
+
+func _end_combat():
+	print("Ending combat")
+
 func _apply_round_start_effects():
 	print("Applying round start effects")
 
 
-#
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-	#pass
-#
-#func play_turn():
-	#"""Handles play turn management"""
-	#match turn:
-		#turn_order.PLAYER:
-			#pass
-		#turn_order.ENEMY:
-			#_end_turn()
-#
-#func _end_turn():
-	#"""Handles end turn management"""
-	#match turn:
-		#turn_order.PLAYER:
-			#turn = turn_order.ENEMY
-		#turn_order.ENEMY:
-			#turn = turn_order.PLAYER
-#
-#func _on_attack_button_pressed():
-	#"""Handles the attack button signal to spend resources and deal damage"""
-	#enemy.health_component.damage(10)
-	#_end_turn()
-#
 func _on_enemy_attack(damage):
 	print("damage")
-	player.health_component.damage(damage)
+	#player.health_component.damage(damage)
 
 
 func _on_start_button_pressed():
 	start_button.queue_free()
-	_combat_loop()
-	
-	
+	_play_combat_round()
 
 
 func _on_player_battle_scene_deal_total_damage(amount):
 	print(amount)
-	enemy.health_component.damage(amount)
+	#enemy.health_component.damage(amount)
+
+
+func _on_turn_manager_round_ended():
+	_start_next_round()
+
+
+func _on_player_battle_scene_turn_ended():
+	turn_manager.end_turn()
+
+func _on_enemy_battle_scene_turn_ended():
+	turn_manager.end_turn()
+
+
+func _on_enemy_battle_scene_combatant_destroyed():
+	if len(combatants) <= 1:
+		print("You win")

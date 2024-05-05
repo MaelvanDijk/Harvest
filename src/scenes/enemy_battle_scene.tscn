@@ -13,3 +13,5 @@ position = Vector2(-58, -294)
 
 [node name="SscDuskWing" type="Sprite2D" parent="."]
 texture = ExtResource("3_keg1x")
+
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
