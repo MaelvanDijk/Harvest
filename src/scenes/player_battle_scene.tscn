@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://g1hmpj4ghbke"]
+[gd_scene load_steps=7 format=3 uid="uid://g1hmpj4ghbke"]
 
 [ext_resource type="Script" path="res://scripts/player_battle_scene.gd" id="1_j06i3"]
 [ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
 [ext_resource type="Texture2D" uid="uid://by50o11reaub1" path="res://Sprites/TEMP/SSC MONARCH.png" id="3_smeih"]
 [ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/right_arm_component.tscn" id="4_sfbtf"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="5_1313j"]
+[ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="6_vmjol"]
 
 [node name="PlayerBattleScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
 script = ExtResource("1_j06i3")
@@ -21,14 +22,6 @@ texture = ExtResource("3_smeih")
 position = Vector2(-207, -41)
 attack = 20
 
-[node name="LeftArmPart" type="Node2D" parent="."]
-
-[node name="HeadPart" type="Node2D" parent="."]
-
-[node name="MainBodyPart" type="Node2D" parent="."]
-
-[node name="LowerBodyPart" type="Node2D" parent="."]
-
 [node name="TurnSprite" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(3.99994, -527)
@@ -37,12 +30,7 @@ scale = Vector2(1.85593, 1.85593)
 texture = ExtResource("5_1313j")
 hframes = 14
 
-[node name="EndTurnButton" type="Button" parent="."]
-offset_left = 418.0
-offset_top = -178.0
-offset_right = 496.0
-offset_bottom = -147.0
-text = "End Turn"
+[node name="TargetComponent" parent="." instance=ExtResource("6_vmjol")]
 
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
 [connection signal="deal_damage" from="RightArmComponent" to="." method="_on_right_arm_component_deal_damage"]
-[connection signal="pressed" from="EndTurnButton" to="." method="_on_end_turn_button_pressed"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://br2ee6od7ur16"]
+
+[ext_resource type="Script" path="res://scenes/target_component.gd" id="1_p5jo7"]
+[ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="2_cxr6j"]
+
+[node name="TargetComponent" type="Node2D"]
+script = ExtResource("1_p5jo7")
+
+[node name="TargetSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-0.999996, 9.53674e-07)
+rotation = 1.56474
+texture = ExtResource("2_cxr6j")
+hframes = 14

@@ -2,7 +2,7 @@ extends Node
 class_name EnemyBattleCharacter
 
 @export var health_component: HealthComponent
-@export var attack := 10
+@export var damage_amount := 10
 @export var speed:int
 
 signal attack_player(damage)
@@ -11,7 +11,7 @@ signal combatant_destroyed
 	
 func _attack():
 	print("enemy attacking!")
-	attack_player.emit(attack)
+	attack_player.emit(damage_amount)
 	
 func play_turn():
 	print("playing turn")
