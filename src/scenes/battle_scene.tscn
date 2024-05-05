@@ -36,16 +36,16 @@ script = ExtResource("5_spdwb")
 [node name="EnemyGroup" type="Node" parent="."]
 
 [node name="EnemyBattleScene" parent="EnemyGroup" instance=ExtResource("3_2bkef")]
-position = Vector2(1459, 853)
+position = Vector2(1398, 855)
 speed = 10
 
 [node name="EnemyBattleScene2" parent="EnemyGroup" node_paths=PackedStringArray("health_component") instance=ExtResource("3_2bkef")]
-position = Vector2(1728, 441)
+position = Vector2(1733, 486)
 health_component = NodePath("../EnemyBattleScene/HealthComponent")
 speed = 10
 
 [node name="EnemyBattleScene3" parent="EnemyGroup" node_paths=PackedStringArray("health_component") instance=ExtResource("3_2bkef")]
-position = Vector2(1442, 332)
+position = Vector2(1380, 298)
 health_component = NodePath("../EnemyBattleScene/HealthComponent")
 speed = 10
 
