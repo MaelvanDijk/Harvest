@@ -6,7 +6,7 @@ class_name PlayerBattleCharacter
 @export var speed:int
 
 @onready var turn_sprite := $TurnSprite
-@onready var battle_menu_controler := $BattleMenuControler
+@onready var battle_menu := $BattleMenu
 
 var is_turn_active = false
 
@@ -24,7 +24,7 @@ func _make_active():
 	"""Handles activation of components to allow actions and visual queues."""
 	is_turn_active = true
 	turn_sprite.visible = true
-	battle_menu_controler.visible = true
+	battle_menu.visible = true
 	
 
 func make_inactive():
@@ -45,7 +45,6 @@ func _on_right_arm_component_deal_damage(amount):
 
 func _on_health_component_health_depleted():
 	self.queue_free()
-	
-func _on_end_turn_button_pressed():
-	battle_menu_controler.visible = false
+
+func _on_battle_menu_turn_ended():
 	player_turn_ended.emit()

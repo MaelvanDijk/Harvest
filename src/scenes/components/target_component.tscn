@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://br2ee6od7ur16"]
 
-[ext_resource type="Script" path="res://scenes/target_component.gd" id="1_p5jo7"]
+[ext_resource type="Script" path="res://scripts/target_component.gd" id="1_p5jo7"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="2_cxr6j"]
 
 [node name="TargetComponent" type="Node2D"]

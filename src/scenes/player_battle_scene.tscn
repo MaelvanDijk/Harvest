@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://g1hmpj4ghbke"]
+[gd_scene load_steps=8 format=3 uid="uid://g1hmpj4ghbke"]
 
 [ext_resource type="Script" path="res://scripts/player_battle_scene.gd" id="1_j06i3"]
 [ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/right_arm_component.tscn" id="4_sfbtf"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="5_1313j"]
 [ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="6_vmjol"]
+[ext_resource type="PackedScene" uid="uid://cvtuxrhjy23ib" path="res://scenes/battle_menu.tscn" id="7_1vv7i"]
 
 [node name="PlayerBattleScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
 script = ExtResource("1_j06i3")
@@ -34,34 +35,12 @@ hframes = 14
 
 [node name="TargetComponent" parent="." instance=ExtResource("6_vmjol")]
 
-[node name="BattleMenuControler" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 372.0
-offset_top = -88.0
-offset_right = 412.0
-offset_bottom = -48.0
-
-[node name="ActionContainer" type="VBoxContainer" parent="BattleMenuControler"]
-layout_mode = 2
-offset_right = 85.0
-offset_bottom = 136.0
-
-[node name="AttackButton" type="Button" parent="BattleMenuControler/ActionContainer"]
-layout_mode = 2
-text = "Attack"
-
-[node name="OverdriveButton" type="Button" parent="BattleMenuControler/ActionContainer"]
-layout_mode = 2
-text = "Overdrive"
-
-[node name="RepairButton" type="Button" parent="BattleMenuControler/ActionContainer"]
-layout_mode = 2
-text = "Repair
-"
-
-[node name="EndTurnButton" type="Button" parent="BattleMenuControler/ActionContainer"]
-layout_mode = 2
-text = "End Turn"
+[node name="BattleMenu" parent="." instance=ExtResource("7_1vv7i")]
+visible = false
+offset_left = 196.0
+offset_top = 21.0
+offset_right = 196.0
+offset_bottom = 21.0
 
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+[connection signal="turn_ended" from="BattleMenu" to="." method="_on_battle_menu_turn_ended"]

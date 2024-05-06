@@ -1,0 +1,98 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvtuxrhjy23ib"]
+
+[ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_l4pmf"]
+
+[node name="BattleMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l4pmf")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Panel"]
+layout_mode = 2
+color = Color(1.3236e-07, 0.259885, 0.259904, 1)
+
+[node name="VBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="MainChoiceContainer" type="BoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="MainColumnActionContainer" type="VBoxContainer" parent="Panel/VBoxContainer/MainChoiceContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AttackButton" type="Button" parent="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="OverdriveButton" type="Button" parent="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer"]
+layout_mode = 2
+text = "Overdrive"
+
+[node name="StatsButton" type="Button" parent="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer"]
+layout_mode = 2
+text = "Stats"
+
+[node name="RepairButton" type="Button" parent="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer"]
+layout_mode = 2
+text = "Repair"
+
+[node name="EndTurn" type="Button" parent="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer"]
+layout_mode = 2
+text = "End turn"
+
+[node name="SecondaryChoiceContainer" type="BoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ActionColumnsContainer" type="HBoxContainer" parent="Panel/VBoxContainer/SecondaryChoiceContainer"]
+layout_mode = 2
+
+[node name="FirstColumnActionContainer" type="VBoxContainer" parent="Panel/VBoxContainer/SecondaryChoiceContainer/ActionColumnsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SecondColumnActionContainer" type="VBoxContainer" parent="Panel/VBoxContainer/SecondaryChoiceContainer/ActionColumnsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ThirdColumnActionContainer" type="VBoxContainer" parent="Panel/VBoxContainer/SecondaryChoiceContainer/ActionColumnsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FifthColumnActionContainer" type="VBoxContainer" parent="Panel/VBoxContainer/SecondaryChoiceContainer/ActionColumnsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ActionInformationPanel" type="BoxContainer" parent="Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Panel/VBoxContainer/ActionInformationPanel"]
+layout_mode = 2
+
+[node name="ActionNameLabel" type="Label" parent="Panel/VBoxContainer/ActionInformationPanel/VSplitContainer"]
+layout_mode = 2
+text = "<Action name>
+"
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="Panel/VBoxContainer/ActionInformationPanel/VSplitContainer"]
+layout_mode = 2
+text = "<Action Description>
+"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer/OverdriveButton" to="." method="_on_overdrive_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer/StatsButton" to="." method="_on_stats_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer/RepairButton" to="." method="_on_repair_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MainChoiceContainer/MainColumnActionContainer/EndTurn" to="." method="_on_end_turn_pressed"]
