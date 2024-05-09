@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://h0ukpxk0ltan"]
+
+[ext_resource type="Script" path="res://scripts/arm_component.gd" id="1_mbtnt"]
+
+[node name="ArmComponent" type="Node2D"]
+script = ExtResource("1_mbtnt")

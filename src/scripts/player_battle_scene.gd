@@ -2,11 +2,12 @@ extends Node
 class_name PlayerBattleCharacter
 
 @export var health_component: HealthComponent
-@export var righ_arm_component: RightArmComponent
+@export var righ_arm_component: ArmComponent
 @export var speed:int
 
 @onready var turn_sprite := $TurnSprite
 @onready var battle_menu := $BattleMenu
+@onready var mech_body_component := $MechBodyComponent
 
 var is_turn_active = false
 
@@ -24,8 +25,8 @@ func _make_active():
 	"""Handles activation of components to allow actions and visual queues."""
 	is_turn_active = true
 	turn_sprite.visible = true
-	battle_menu.visible = true
 	
+
 
 func make_inactive():
 	is_turn_active = false
@@ -34,8 +35,7 @@ func make_inactive():
 func _play_start_phase():
 	print("start phase")
 
-func _play_main_phase():
-	print("main phase")
+func _play_main_phase():	battle_menu.visible = true
 
 func _play_cleanup_phase():
 	print("end phase")
@@ -48,3 +48,9 @@ func _on_health_component_health_depleted():
 
 func _on_battle_menu_turn_ended():
 	player_turn_ended.emit()
+
+
+func _on_battle_menu_sub_actions_requested(action_type):
+	var sub_actions = mech_body_component.get_sub_actions(action_type)
+	print(sub_actions)
+	return battle_menu.generate_action_buttons(sub_actions)

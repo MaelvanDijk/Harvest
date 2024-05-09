@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b167a5lvnxcp2"]
+
+[ext_resource type="Script" path="res://scripts/upper_body_component.gd" id="1_blkgr"]
+
+[node name="UpperBodyComponent" type="Node2D"]
+script = ExtResource("1_blkgr")

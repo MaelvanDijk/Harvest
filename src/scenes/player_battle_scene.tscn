@@ -1,17 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://g1hmpj4ghbke"]
+[gd_scene load_steps=12 format=3 uid="uid://g1hmpj4ghbke"]
 
 [ext_resource type="Script" path="res://scripts/player_battle_scene.gd" id="1_j06i3"]
 [ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
 [ext_resource type="Texture2D" uid="uid://by50o11reaub1" path="res://Sprites/TEMP/SSC MONARCH.png" id="3_smeih"]
-[ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/right_arm_component.tscn" id="4_sfbtf"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="5_1313j"]
 [ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="6_vmjol"]
 [ext_resource type="PackedScene" uid="uid://cvtuxrhjy23ib" path="res://scenes/battle_menu.tscn" id="7_1vv7i"]
+[ext_resource type="Script" path="res://scripts/mech_body_component.gd" id="8_c8jqv"]
+[ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/arm_component.tscn" id="8_q8mji"]
+[ext_resource type="PackedScene" uid="uid://6q18igs0rq7x" path="res://scenes/components/lower_body_component.tscn" id="9_gr5mx"]
+[ext_resource type="PackedScene" uid="uid://b167a5lvnxcp2" path="res://scenes/components/upper_body_component.tscn" id="10_bdhmb"]
+[ext_resource type="PackedScene" uid="uid://3yf7ibnshh7o" path="res://scenes/components/head_component.tscn" id="11_rbodc"]
 
 [node name="PlayerBattleScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
 script = ExtResource("1_j06i3")
 health_component = NodePath("HealthComponent")
-righ_arm_component = NodePath("RightArmComponent")
+righ_arm_component = NodePath("MechBodyComponent/RightArmComponent")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_7xxjy")]
 position = Vector2(-56, -203)
@@ -20,10 +24,6 @@ position = Vector2(-56, -203)
 position = Vector2(1, 18)
 scale = Vector2(0.496591, 0.496591)
 texture = ExtResource("3_smeih")
-
-[node name="RightArmComponent" parent="." instance=ExtResource("4_sfbtf")]
-position = Vector2(-207, -41)
-attack = 20
 
 [node name="TurnSprite" type="Sprite2D" parent="."]
 visible = false
@@ -42,5 +42,27 @@ offset_top = 21.0
 offset_right = 196.0
 offset_bottom = 21.0
 
+[node name="MechBodyComponent" type="Node2D" parent="." node_paths=PackedStringArray("head_component", "upper_body_component", "right_arm_component", "left_arm_component", "lower_body_component")]
+script = ExtResource("8_c8jqv")
+head_component = NodePath("HeadComponent")
+upper_body_component = NodePath("UpperBodyComponent")
+right_arm_component = NodePath("RightArmComponent")
+left_arm_component = NodePath("LeftArmComponent")
+lower_body_component = NodePath("LowerBodyComponent")
+
+[node name="RightArmComponent" parent="MechBodyComponent" instance=ExtResource("8_q8mji")]
+position = Vector2(-207, -41)
+
+[node name="LeftArmComponent" parent="MechBodyComponent" instance=ExtResource("8_q8mji")]
+position = Vector2(-207, -41)
+arm_type = 1
+
+[node name="LowerBodyComponent" parent="MechBodyComponent" instance=ExtResource("9_gr5mx")]
+
+[node name="UpperBodyComponent" parent="MechBodyComponent" instance=ExtResource("10_bdhmb")]
+
+[node name="HeadComponent" parent="MechBodyComponent" instance=ExtResource("11_rbodc")]
+
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+[connection signal="sub_actions_requested" from="BattleMenu" to="." method="_on_battle_menu_sub_actions_requested"]
 [connection signal="turn_ended" from="BattleMenu" to="." method="_on_battle_menu_turn_ended"]
