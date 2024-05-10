@@ -1,28 +1,34 @@
 extends Control
 
-var actions := {
-	"attack": {
-		"Attack 1":10, " Attack 2":10, "Attack 3":10, "Attack 4":10, "Attack 5":10,
-		"Attack 6":10, " Attack 7":10, "Attack 8":10, "Attack 9":10, "Attack 10":10,
-		"Attack 11":50, " Attack 12":50, "Attack 13":40, "Attack 14":30, "Attack 15":20,
-		},
-	"repair": {"Right Arm": 10, "Left Arm":10, "Head":10, "Torso":10, "Legs":10},		
-	"overdrive": {"Right Arm": 10, "Left Arm":10, "Head":10, "Torso":10, "Legs":10},
-	"status": {"Right Arm": 10, "Left Arm":10, "Head":10, "Torso":10, "Legs":10}
-	}
-
+var is_active := false
 var max_horizontal_buttons := 5
 var last_selected_main_option : String
+var selected_action
 
-@onready var action_columns_container := $Panel/VBoxContainer/SecondaryChoiceContainer/ActionColumnsContainer
+@onready var target_selector = $TargetSelector
+@onready var battle_menu_panel = $BattleMenuPanel
+@onready var action_columns_container := $BattleMenuPanel/VBoxContainer/SecondaryChoiceContainer/ActionColumnsContainer
 @onready var action_columns_array := action_columns_container.get_children()
 
-signal turn_ended
 signal sub_actions_requested(action_type:String)
-signal action_selected(action)
+signal action_and_target_selected(selected_action, target)
 
+
+func make_active():
+	print("ACTIVATE")
+	is_active = true
+	battle_menu_panel.visible = true
+	#_disable_or_enable_child_nodes(battle_menu_panel, false)
+
+func _make_inactive():
+	_clear_previous_buttons()
+	last_selected_main_option = ""
+	is_active = false
+
+	#_disable_or_enable_child_nodes(battle_menu_panel, true)
 
 func generate_action_buttons(sub_actions:Dictionary):
+	print("generatign")
 	_clear_previous_buttons()
 	print(sub_actions)
 	for action_name in sub_actions:
@@ -82,13 +88,29 @@ func _on_repair_button_pressed():
 		print("requesting available repair actions")
 		sub_actions_requested.emit(action_type)
 		last_selected_main_option = action_type
-
-
-func _on_end_turn_pressed():
-	_clear_previous_buttons()
-	last_selected_main_option = ""	
-	self.hide()
-	turn_ended.emit()
 	
 func _on_action_button_pressed(action_value):
-	print(action_value)
+	#_disable_or_enable_child_nodes(battle_menu_panel, true)
+	target_selector.make_active()
+	selected_action = action_value
+
+func _on_target_selector_selection_canceled():
+	pass
+	#_disable_or_enable_child_nodes(battle_menu_panel, false)
+
+func _on_target_selector_target_selected(target):
+	action_and_target_selected.emit(selected_action, target)
+	_make_inactive()
+
+#func _disable_or_enable_child_nodes(node:Node, disable:bool):
+	#var focus = FOCUS_NONE if disable else FOCUS_ALL
+	#if "disabled" in node:
+		#node.disabled = disable
+	#if "focus_mode" in node:
+		#node.focus_mode = FOCUS_NONE
+	#for child in node.get_children():
+		#_disable_or_enable_child_nodes(child, disable)
+
+
+
+

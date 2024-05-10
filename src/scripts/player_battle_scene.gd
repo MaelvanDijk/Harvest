@@ -19,13 +19,12 @@ func play_turn():
 	_make_active()
 	_play_start_phase()
 	_play_main_phase()
-	_play_cleanup_phase()
+
 
 func _make_active():
 	"""Handles activation of components to allow actions and visual queues."""
 	is_turn_active = true
 	turn_sprite.visible = true
-	
 
 
 func make_inactive():
@@ -35,22 +34,26 @@ func make_inactive():
 func _play_start_phase():
 	print("start phase")
 
-func _play_main_phase():	battle_menu.visible = true
+func _play_main_phase():
+	print("main phase")
+	battle_menu.make_active()
 
 func _play_cleanup_phase():
 	print("end phase")
+	player_turn_ended.emit()
 
-func _on_right_arm_component_deal_damage(amount):
-	deal_total_damage.emit(amount)
+func _perform_action(selected_action, target):
+	pass
 
 func _on_health_component_health_depleted():
 	self.queue_free()
-
-func _on_battle_menu_turn_ended():
-	player_turn_ended.emit()
-
 
 func _on_battle_menu_sub_actions_requested(action_type):
 	var sub_actions = mech_body_component.get_sub_actions(action_type)
 	print(sub_actions)
 	return battle_menu.generate_action_buttons(sub_actions)
+
+func _on_battle_menu_action_and_target_selected(selected_action, target):
+	_perform_action(selected_action, target)
+	_play_cleanup_phase()
+

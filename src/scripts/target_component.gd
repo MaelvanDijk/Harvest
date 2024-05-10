@@ -10,25 +10,41 @@ var target_array := Array()
 var active_target: Node2D
 var unit_target_idx := 0
 var group_target_idx := 1
+var is_active = false
 
 signal target_selected(target:Node2D)
+signal selection_canceled
 
-func _ready():
+func make_active():
+	self.is_active = true
+	self.visible = true
 	_get_targets()
+
+func _make_inactive():
+	self.is_active = false
+	self.visible = false
+
 	
-func _input(_delta):
-	if Input.is_key_pressed(KEY_DOWN):
-		_change_target(-1)
-	elif Input.is_key_pressed(KEY_UP):
-		_change_target(1)
-	elif Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_RIGHT):
-		_change_target_group()
-	elif Input.is_key_pressed(KEY_ENTER):
-		target_selected.emit(active_target)
+func _input(event):
+	if is_active:
+		if event.is_action_pressed("ui_down"):
+			_change_target(-1)
+		elif event.is_action_pressed("ui_up"):
+			_change_target(1)
+		elif event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right"):
+			_change_target_group()
+		elif event.is_action_pressed("ui_accept"):
+			target_selected.emit(active_target)
+			_make_inactive()
+		elif event.is_action_pressed("ui_cancel"):
+			unit_target_idx = 0
+			group_target_idx = 1
+			selection_canceled.emit()
+			_make_inactive()
 
 func _get_groups():
-	var ally_group_name = get_parent().get_parent().name
-	ally_array = get_parent().get_parent().get_children()
+	var ally_group_name = get_parent().get_parent().get_parent().name
+	ally_array = get_parent().get_parent().get_parent().get_children()
 	
 	if ally_group_name == "PlayerGroup":
 		enemy_array = get_tree().current_scene.get_node("EnemyGroup").get_children()

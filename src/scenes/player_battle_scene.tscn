@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://g1hmpj4ghbke"]
+[gd_scene load_steps=11 format=3 uid="uid://g1hmpj4ghbke"]
 
 [ext_resource type="Script" path="res://scripts/player_battle_scene.gd" id="1_j06i3"]
 [ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
 [ext_resource type="Texture2D" uid="uid://by50o11reaub1" path="res://Sprites/TEMP/SSC MONARCH.png" id="3_smeih"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="5_1313j"]
-[ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="6_vmjol"]
 [ext_resource type="PackedScene" uid="uid://cvtuxrhjy23ib" path="res://scenes/battle_menu.tscn" id="7_1vv7i"]
 [ext_resource type="Script" path="res://scripts/mech_body_component.gd" id="8_c8jqv"]
 [ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/arm_component.tscn" id="8_q8mji"]
@@ -33,10 +32,7 @@ scale = Vector2(1.85593, 1.85593)
 texture = ExtResource("5_1313j")
 hframes = 14
 
-[node name="TargetComponent" parent="." instance=ExtResource("6_vmjol")]
-
 [node name="BattleMenu" parent="." instance=ExtResource("7_1vv7i")]
-visible = false
 offset_left = 196.0
 offset_top = 21.0
 offset_right = 196.0
@@ -64,5 +60,5 @@ arm_type = 1
 [node name="HeadComponent" parent="MechBodyComponent" instance=ExtResource("11_rbodc")]
 
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+[connection signal="action_and_target_selected" from="BattleMenu" to="." method="_on_battle_menu_action_and_target_selected"]
 [connection signal="sub_actions_requested" from="BattleMenu" to="." method="_on_battle_menu_sub_actions_requested"]
-[connection signal="turn_ended" from="BattleMenu" to="." method="_on_battle_menu_turn_ended"]
