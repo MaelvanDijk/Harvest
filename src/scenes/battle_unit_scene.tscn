@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://g1hmpj4ghbke"]
 
-[ext_resource type="Script" path="res://scripts/player_battle_scene.gd" id="1_j06i3"]
+[ext_resource type="Script" path="res://scripts/battle_unit_scene.gd" id="1_k00rm"]
 [ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
 [ext_resource type="Texture2D" uid="uid://by50o11reaub1" path="res://Sprites/TEMP/SSC MONARCH.png" id="3_smeih"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="5_1313j"]
@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://b167a5lvnxcp2" path="res://scenes/components/upper_body_component.tscn" id="10_bdhmb"]
 [ext_resource type="PackedScene" uid="uid://3yf7ibnshh7o" path="res://scenes/components/head_component.tscn" id="11_rbodc"]
 
-[node name="PlayerBattleScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
-script = ExtResource("1_j06i3")
+[node name="BattleUnitScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
+script = ExtResource("1_k00rm")
 health_component = NodePath("HealthComponent")
 righ_arm_component = NodePath("MechBodyComponent/RightArmComponent")
 
@@ -33,6 +33,7 @@ texture = ExtResource("5_1313j")
 hframes = 14
 
 [node name="BattleMenu" parent="." instance=ExtResource("7_1vv7i")]
+visible = false
 offset_left = 196.0
 offset_top = 21.0
 offset_right = 196.0
@@ -58,6 +59,8 @@ arm_type = 1
 [node name="UpperBodyComponent" parent="MechBodyComponent" instance=ExtResource("10_bdhmb")]
 
 [node name="HeadComponent" parent="MechBodyComponent" instance=ExtResource("11_rbodc")]
+
+[node name="AIControler" type="Node" parent="."]
 
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
 [connection signal="action_and_target_selected" from="BattleMenu" to="." method="_on_battle_menu_action_and_target_selected"]

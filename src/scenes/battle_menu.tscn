@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_l4pmf"]
 [ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="2_gk2am"]
 
-[node name="BattleMenu" type="Control"]
+[node name="PlayerBattleController" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

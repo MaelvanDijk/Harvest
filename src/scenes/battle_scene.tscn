@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://doap3bnd2qgtk"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_3t2yw"]
-[ext_resource type="PackedScene" uid="uid://g1hmpj4ghbke" path="res://scenes/player_battle_scene.tscn" id="2_ipmek"]
+[ext_resource type="PackedScene" uid="uid://g1hmpj4ghbke" path="res://scenes/battle_unit_scene.tscn" id="2_ipmek"]
 [ext_resource type="PackedScene" uid="uid://30hee5p247n3" path="res://scenes/enemy_battle_scene.tscn" id="3_2bkef"]
 [ext_resource type="Script" path="res://scripts/debug/battle_debug_menu.gd" id="4_vrb7h"]
 [ext_resource type="Script" path="res://scripts/turn_manager.gd" id="5_spdwb"]
@@ -49,11 +49,15 @@ position = Vector2(1380, 298)
 health_component = NodePath("../EnemyBattleScene/HealthComponent")
 speed = 10
 
+[node name="EnemyBattleScene4" parent="EnemyGroup" instance=ExtResource("2_ipmek")]
+position = Vector2(1161, 576)
+scale = Vector2(-1, 1)
+unit_faction = 2
+
 [node name="PlayerGroup" type="Node" parent="."]
 
 [node name="PlayerBattleScene" parent="PlayerGroup" instance=ExtResource("2_ipmek")]
-position = Vector2(323, 595)
-speed = 30
+position = Vector2(296, 496)
 
 [connection signal="round_ended" from="TurnManager" to="." method="_on_turn_manager_round_ended"]
 [connection signal="attack_player" from="EnemyGroup/EnemyBattleScene" to="." method="_on_enemy_battle_scene_attack_player"]
