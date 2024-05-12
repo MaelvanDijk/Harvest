@@ -1,20 +1,22 @@
-[gd_scene load_steps=11 format=3 uid="uid://g1hmpj4ghbke"]
+[gd_scene load_steps=12 format=3 uid="uid://g1hmpj4ghbke"]
 
 [ext_resource type="Script" path="res://scripts/battle_unit_scene.gd" id="1_k00rm"]
 [ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="2_7xxjy"]
 [ext_resource type="Texture2D" uid="uid://by50o11reaub1" path="res://Sprites/TEMP/SSC MONARCH.png" id="3_smeih"]
 [ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="5_1313j"]
+[ext_resource type="PackedScene" uid="uid://cglivrp1c321m" path="res://scenes/components/mech_body_component.tscn" id="6_8qryk"]
 [ext_resource type="PackedScene" uid="uid://cvtuxrhjy23ib" path="res://scenes/battle_menu.tscn" id="7_1vv7i"]
-[ext_resource type="Script" path="res://scripts/mech_body_component.gd" id="8_c8jqv"]
 [ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/arm_component.tscn" id="8_q8mji"]
 [ext_resource type="PackedScene" uid="uid://6q18igs0rq7x" path="res://scenes/components/lower_body_component.tscn" id="9_gr5mx"]
 [ext_resource type="PackedScene" uid="uid://b167a5lvnxcp2" path="res://scenes/components/upper_body_component.tscn" id="10_bdhmb"]
+[ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="10_n0jd6"]
 [ext_resource type="PackedScene" uid="uid://3yf7ibnshh7o" path="res://scenes/components/head_component.tscn" id="11_rbodc"]
 
-[node name="BattleUnitScene" type="Node2D" node_paths=PackedStringArray("health_component", "righ_arm_component")]
+[node name="BattleUnitScene" type="Node2D" node_paths=PackedStringArray("health_component", "mech_body_component", "unit_controller")]
 script = ExtResource("1_k00rm")
 health_component = NodePath("HealthComponent")
-righ_arm_component = NodePath("MechBodyComponent/RightArmComponent")
+mech_body_component = NodePath("MechBodyComponent")
+unit_controller = NodePath("BattleMenu")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_7xxjy")]
 position = Vector2(-56, -203)
@@ -33,34 +35,27 @@ texture = ExtResource("5_1313j")
 hframes = 14
 
 [node name="BattleMenu" parent="." instance=ExtResource("7_1vv7i")]
-visible = false
-offset_left = 196.0
-offset_top = 21.0
-offset_right = 196.0
-offset_bottom = 21.0
+offset_left = -106.0
+offset_top = 216.0
+offset_right = -106.0
+offset_bottom = 216.0
 
-[node name="MechBodyComponent" type="Node2D" parent="." node_paths=PackedStringArray("head_component", "upper_body_component", "right_arm_component", "left_arm_component", "lower_body_component")]
-script = ExtResource("8_c8jqv")
-head_component = NodePath("HeadComponent")
-upper_body_component = NodePath("UpperBodyComponent")
-right_arm_component = NodePath("RightArmComponent")
-left_arm_component = NodePath("LeftArmComponent")
-lower_body_component = NodePath("LowerBodyComponent")
+[node name="MechBodyComponent" parent="." node_paths=PackedStringArray("head_component", "upper_body_component", "right_arm_component", "left_arm_component", "lower_body_component") instance=ExtResource("6_8qryk")]
+head_component = NodePath("../HeadComponent")
+upper_body_component = NodePath("../UpperBodyComponent")
+right_arm_component = NodePath("../ArmComponent")
+left_arm_component = NodePath("../ArmComponent")
+lower_body_component = NodePath("../LowerBodyComponent")
 
-[node name="RightArmComponent" parent="MechBodyComponent" instance=ExtResource("8_q8mji")]
-position = Vector2(-207, -41)
+[node name="ArmComponent" parent="." instance=ExtResource("8_q8mji")]
 
-[node name="LeftArmComponent" parent="MechBodyComponent" instance=ExtResource("8_q8mji")]
-position = Vector2(-207, -41)
-arm_type = 1
+[node name="HeadComponent" parent="." instance=ExtResource("11_rbodc")]
 
-[node name="LowerBodyComponent" parent="MechBodyComponent" instance=ExtResource("9_gr5mx")]
+[node name="LowerBodyComponent" parent="." instance=ExtResource("9_gr5mx")]
 
-[node name="UpperBodyComponent" parent="MechBodyComponent" instance=ExtResource("10_bdhmb")]
+[node name="TargetComponent" parent="." instance=ExtResource("10_n0jd6")]
 
-[node name="HeadComponent" parent="MechBodyComponent" instance=ExtResource("11_rbodc")]
-
-[node name="AIControler" type="Node" parent="."]
+[node name="UpperBodyComponent" parent="." instance=ExtResource("10_bdhmb")]
 
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
 [connection signal="action_and_target_selected" from="BattleMenu" to="." method="_on_battle_menu_action_and_target_selected"]

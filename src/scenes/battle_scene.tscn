@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_3t2yw"]
 [ext_resource type="PackedScene" uid="uid://g1hmpj4ghbke" path="res://scenes/battle_unit_scene.tscn" id="2_ipmek"]
-[ext_resource type="PackedScene" uid="uid://30hee5p247n3" path="res://scenes/enemy_battle_scene.tscn" id="3_2bkef"]
 [ext_resource type="Script" path="res://scripts/debug/battle_debug_menu.gd" id="4_vrb7h"]
 [ext_resource type="Script" path="res://scripts/turn_manager.gd" id="5_spdwb"]
+[ext_resource type="PackedScene" uid="uid://obk3lpgpkc64" path="res://scenes/basic_enemy_1.tscn" id="6_y0fi6"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_3t2yw")
@@ -35,24 +35,8 @@ script = ExtResource("5_spdwb")
 
 [node name="EnemyGroup" type="Node" parent="."]
 
-[node name="EnemyBattleScene" parent="EnemyGroup" instance=ExtResource("3_2bkef")]
-position = Vector2(1398, 855)
-speed = 10
-
-[node name="EnemyBattleScene2" parent="EnemyGroup" node_paths=PackedStringArray("health_component") instance=ExtResource("3_2bkef")]
-position = Vector2(1733, 486)
-health_component = NodePath("../EnemyBattleScene/HealthComponent")
-speed = 10
-
-[node name="EnemyBattleScene3" parent="EnemyGroup" node_paths=PackedStringArray("health_component") instance=ExtResource("3_2bkef")]
-position = Vector2(1380, 298)
-health_component = NodePath("../EnemyBattleScene/HealthComponent")
-speed = 10
-
-[node name="EnemyBattleScene4" parent="EnemyGroup" instance=ExtResource("2_ipmek")]
-position = Vector2(1161, 576)
-scale = Vector2(-1, 1)
-unit_faction = 2
+[node name="BasicEnemy1" parent="EnemyGroup" instance=ExtResource("6_y0fi6")]
+position = Vector2(1398, 523)
 
 [node name="PlayerGroup" type="Node" parent="."]
 
@@ -60,13 +44,4 @@ unit_faction = 2
 position = Vector2(296, 496)
 
 [connection signal="round_ended" from="TurnManager" to="." method="_on_turn_manager_round_ended"]
-[connection signal="attack_player" from="EnemyGroup/EnemyBattleScene" to="." method="_on_enemy_battle_scene_attack_player"]
-[connection signal="combatant_destroyed" from="EnemyGroup/EnemyBattleScene" to="." method="_on_enemy_battle_scene_combatant_destroyed"]
-[connection signal="turn_ended" from="EnemyGroup/EnemyBattleScene" to="." method="_on_enemy_battle_scene_turn_ended"]
-[connection signal="attack_player" from="EnemyGroup/EnemyBattleScene2" to="." method="_on_enemy_battle_scene_attack_player"]
-[connection signal="combatant_destroyed" from="EnemyGroup/EnemyBattleScene2" to="." method="_on_enemy_battle_scene_combatant_destroyed"]
-[connection signal="turn_ended" from="EnemyGroup/EnemyBattleScene2" to="." method="_on_enemy_battle_scene_turn_ended"]
-[connection signal="attack_player" from="EnemyGroup/EnemyBattleScene3" to="." method="_on_enemy_battle_scene_attack_player"]
-[connection signal="combatant_destroyed" from="EnemyGroup/EnemyBattleScene3" to="." method="_on_enemy_battle_scene_combatant_destroyed"]
-[connection signal="turn_ended" from="EnemyGroup/EnemyBattleScene3" to="." method="_on_enemy_battle_scene_turn_ended"]
 [connection signal="deal_total_damage" from="PlayerGroup/PlayerBattleScene" to="." method="_on_player_battle_scene_deal_total_damage"]

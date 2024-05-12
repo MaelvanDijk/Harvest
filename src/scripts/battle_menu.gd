@@ -1,4 +1,5 @@
 extends Control
+class_name BattleMenu
 
 var is_active := false
 var max_horizontal_buttons := 5

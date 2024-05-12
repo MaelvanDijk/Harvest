@@ -1,4 +1,5 @@
 extends Node2D
+class_name MechBodyComponent
 
 @export var head_component:HeadComponent
 @export var upper_body_component:UpperBodyComponent

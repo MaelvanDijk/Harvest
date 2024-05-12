@@ -2,31 +2,21 @@ extends Node
 class_name BattleUnit
 
 @export var health_component: HealthComponent
-@export var righ_arm_component: ArmComponent
+@export var mech_body_component: MechBodyComponent
 @export var speed:int
 @export var unit_faction:UNIT_FACTIONS
+@export var unit_controller: Node
 
 @onready var turn_sprite := $TurnSprite
 @onready var battle_menu := $BattleMenu
-@onready var ai_controller := $AI_Controller
-
-@onready var mech_body_component := $MechBodyComponent
+@onready var ai_controller := $AIController
 
 enum UNIT_FACTIONS {PLAYER, ALLY, ENEMY}
 
-var unit_controller:Node
 var is_turn_active = false
 
 signal deal_total_damage(amount)
 signal player_turn_ended
-
-func _ready():
-	if unit_faction == UNIT_FACTIONS.PLAYER:
-		unit_controller = battle_menu
-		unit_controller.visible=true
-	elif unit_faction == UNIT_FACTIONS.ENEMY:
-		unit_controller = ai_controller
-
 
 func play_turn():
 	print("playing turn")

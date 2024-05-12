@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cglivrp1c321m"]
+
+[ext_resource type="Script" path="res://scripts/mech_body_component.gd" id="1_n2op6"]
+[ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/arm_component.tscn" id="2_y6713"]
+[ext_resource type="PackedScene" uid="uid://6q18igs0rq7x" path="res://scenes/components/lower_body_component.tscn" id="3_lpn3v"]
+[ext_resource type="PackedScene" uid="uid://b167a5lvnxcp2" path="res://scenes/components/upper_body_component.tscn" id="4_1mqbc"]
+[ext_resource type="PackedScene" uid="uid://3yf7ibnshh7o" path="res://scenes/components/head_component.tscn" id="5_kcnm3"]
+
+[node name="MechBodyComponent" type="Node2D" node_paths=PackedStringArray("head_component", "upper_body_component", "right_arm_component", "left_arm_component", "lower_body_component")]
+script = ExtResource("1_n2op6")
+head_component = NodePath("")
+upper_body_component = NodePath("")
+right_arm_component = NodePath("")
+left_arm_component = NodePath("")
+lower_body_component = NodePath("")
+
+[node name="RightArmComponent" parent="." instance=ExtResource("2_y6713")]
+position = Vector2(-207, -41)
+
+[node name="LeftArmComponent" parent="." instance=ExtResource("2_y6713")]
+position = Vector2(-207, -41)
+arm_type = 1
+
+[node name="LowerBodyComponent" parent="." instance=ExtResource("3_lpn3v")]
+
+[node name="UpperBodyComponent" parent="." instance=ExtResource("4_1mqbc")]
+
+[node name="HeadComponent" parent="." instance=ExtResource("5_kcnm3")]

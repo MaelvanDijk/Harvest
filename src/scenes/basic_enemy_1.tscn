@@ -1,0 +1,55 @@
+[gd_scene load_steps=12 format=3 uid="uid://obk3lpgpkc64"]
+
+[ext_resource type="Script" path="res://scenes/NewEnemy.gd" id="1_mthkp"]
+[ext_resource type="PackedScene" uid="uid://h0ukpxk0ltan" path="res://scenes/components/arm_component.tscn" id="2_aj3ah"]
+[ext_resource type="PackedScene" uid="uid://3yf7ibnshh7o" path="res://scenes/components/head_component.tscn" id="3_chdpx"]
+[ext_resource type="PackedScene" uid="uid://cvmpj5n7cvrec" path="res://scenes/components/health_component.tscn" id="4_oc750"]
+[ext_resource type="PackedScene" uid="uid://6q18igs0rq7x" path="res://scenes/components/lower_body_component.tscn" id="5_r2cnx"]
+[ext_resource type="PackedScene" uid="uid://br2ee6od7ur16" path="res://scenes/components/target_component.tscn" id="6_k3o7r"]
+[ext_resource type="PackedScene" uid="uid://b167a5lvnxcp2" path="res://scenes/components/upper_body_component.tscn" id="7_jfrgy"]
+[ext_resource type="PackedScene" uid="uid://cglivrp1c321m" path="res://scenes/components/mech_body_component.tscn" id="8_o6d1o"]
+[ext_resource type="Texture2D" uid="uid://dfuusy8tsxrit" path="res://Sprites/TEMP/GMS EVEREST SP-1.png" id="9_6idml"]
+[ext_resource type="Texture2D" uid="uid://cw5mtp6qf3vx8" path="res://Sprites/TEMP/hand_only.png" id="10_wophq"]
+[ext_resource type="Script" path="res://scripts/basic_enemy_ai.gd" id="11_iwve0"]
+
+[node name="BasicEnemy1" type="Node2D" node_paths=PackedStringArray("health_component", "mech_body_component", "unit_controller")]
+script = ExtResource("1_mthkp")
+health_component = NodePath("HealthComponent")
+mech_body_component = NodePath("MechBodyComponent")
+unit_faction = 2
+unit_controller = NodePath("AIControler")
+
+[node name="ArmComponent" parent="." instance=ExtResource("2_aj3ah")]
+
+[node name="HeadComponent" parent="." instance=ExtResource("3_chdpx")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_oc750")]
+position = Vector2(0, -250)
+
+[node name="LowerBodyComponent" parent="." instance=ExtResource("5_r2cnx")]
+
+[node name="TargetComponent" parent="." instance=ExtResource("6_k3o7r")]
+
+[node name="UpperBodyComponent" parent="." instance=ExtResource("7_jfrgy")]
+
+[node name="MechBodyComponent" parent="." node_paths=PackedStringArray("head_component", "upper_body_component", "right_arm_component", "left_arm_component", "lower_body_component") instance=ExtResource("8_o6d1o")]
+head_component = NodePath("../HeadComponent")
+upper_body_component = NodePath("../UpperBodyComponent")
+right_arm_component = NodePath("../ArmComponent")
+left_arm_component = NodePath("../ArmComponent")
+lower_body_component = NodePath("../LowerBodyComponent")
+
+[node name="GmsEverestSp-1" type="Sprite2D" parent="."]
+scale = Vector2(-1, 1)
+texture = ExtResource("9_6idml")
+
+[node name="TurnSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -288)
+rotation = 3.14048
+scale = Vector2(1.85593, 1.85593)
+texture = ExtResource("10_wophq")
+hframes = 14
+
+[node name="AIControler" type="Node" parent="."]
+script = ExtResource("11_iwve0")
